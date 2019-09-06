@@ -5718,7 +5718,7 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-portfinder@^1.0.20, portfinder@^1.0.21:
+portfinder@^1.0.21:
   version "1.0.24"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.24.tgz#11efbc6865f12f37624b6531ead1d809ed965cfa"
   integrity sha512-ekRl7zD2qxYndYflwiryJwMioBI7LI7rVXg3EnLK3sjkouT5eOuhS3gS255XxBksa30VG8UPZYZCdgfGOfkSUg==
@@ -7842,14 +7842,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   integrity sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==
   dependencies:
     minimalistic-assert "^1.0.0"
-
-webpack-auto-find-port@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/webpack-auto-find-port/-/webpack-auto-find-port-0.0.5.tgz#464909a6eeb57e9f083be31964762fbb3a803b33"
-  integrity sha512-TkFESZ221yySjqL/TuMaHscrq/jvO5oHapTMNsace2arZKiBTFzXq1ZnYPwIjvj5Qtnufb6+iRm8rAfISOES0w==
-  dependencies:
-    chalk "^2.4.2"
-    portfinder "^1.0.20"
 
 webpack-bundle-analyzer@^3.4.1:
   version "3.4.1"

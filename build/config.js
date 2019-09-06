@@ -30,8 +30,6 @@ const publicPath = path.resolve(__dirname, `${pathPrefix}public`);
 const staticPath = path.resolve(__dirname, `${pathPrefix}static`);
 // devserver 端口
 const port = 8000;
-// 多页面中JS文件和HTML文件入口根目录绝对路径
-const pagesRootPath = path.resolve(__dirname, `${pathPrefix}src/pages`);
 // dev时是否需要自动打开浏览器
 const needOpenApp = false;
 
@@ -45,17 +43,6 @@ const proxy = {
   // }
 };
 
-// 多页面配置
-const pagesConfig = [
-  {
-    htmlPath: "demo/test.html",
-    jsPathArray: [
-      'demo/index1.js',
-      'demo/index2.js',
-    ],
-  },
-];
-
 module.exports = {
   runMode,
   runModeEnum,
@@ -68,8 +55,7 @@ module.exports = {
   publicPath,
   staticPath,
   port,
-  pagesRootPath,
   needOpenApp,
   proxy,
-  pagesConfig,
+  pagesConfig: require("../pages-config").pagesConfig,
 };

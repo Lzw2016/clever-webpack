@@ -17,7 +17,7 @@ const entries = () => {
       return;
     }
     itemConfig.jsPathArray.forEach(jsPath => {
-      const absolutePath = path.resolve(config.pagesRootPath, jsPath);
+      const absolutePath = path.resolve(config.srcPath, jsPath);
       entry[jsPath] = absolutePath;
       count++;
     });
@@ -32,31 +32,32 @@ const entries = () => {
 // 多页面页面配置 (HTML文件)
 const getHtmlPlugin = () => {
   let baseConfig = {
-    // 压缩 html 文件
-    minify: {
-      // 删除多余的属性
-      removeRedundantAttributes: true,
-      // 折叠空白区域
-      collapseWhitespace: true,
-      // 移除属性的引号
-      removeAttributeQuotes: true,
-      // 移除注释
-      removeComments: true,
-      // 省略只有 boolean 值的属性值 例如：readonly checked
-      collapseBooleanAttributes: true,
-      // 压缩内联css
-      minifyCSS: true
-    },
     favicon: config.favicon,
     appVersion: config.appVersion
   };
   if (config.runMode === config.runModeEnum.dev) {
+    // dev Html 文件处理
     baseConfig = webpackMerge(baseConfig, {
-      // dev Html 文件处理
+      minify: false,
     });
   } else {
+    // prod Html 文件处理
     baseConfig = webpackMerge(baseConfig, {
-      // prod Html 文件处理
+      // 压缩 html 文件
+      minify: {
+        // 删除多余的属性
+        removeRedundantAttributes: true,
+        // 折叠空白区域
+        collapseWhitespace: true,
+        // 移除属性的引号
+        removeAttributeQuotes: true,
+        // 移除注释
+        removeComments: true,
+        // 省略只有 boolean 值的属性值 例如：readonly checked
+        collapseBooleanAttributes: true,
+        // 压缩内联css
+        minifyCSS: true
+      },
     });
   }
   const htmlPluginArray = [];
@@ -68,7 +69,7 @@ const getHtmlPlugin = () => {
       // 输出文件的名称
       filename: itemConfig.htmlPath,
       // 模板文件的路径
-      template: path.resolve(config.pagesRootPath, itemConfig.htmlPath),
+      template: path.resolve(config.srcPath, itemConfig.htmlPath),
       chunks: [...itemConfig.jsPathArray]
     });
     // console.log("template", htmlWebpackConfig.template);

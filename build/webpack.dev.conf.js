@@ -6,19 +6,18 @@ const chalk = require('chalk');
 const ip = require('ip').address();
 const webpack = require("webpack");
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const webpackAutoFindPort = require('webpack-auto-find-port');
 const notifier = require('node-notifier');
 const config = require("./config");
 const webpackBaseConf = require("./webpack.base.conf");
 const postcss = require('../postcss.config');
 
-const webpackDevConf = {
+module.exports = {
   entry: webpackBaseConf.entries(),
   output: {
     path: config.distPath,
-    filename: 'js/[name].[hash].js',
-    chunkFilename: 'js/[name].[chunkhash].js',
-    publicPath: ""
+    filename: '[name]',
+    chunkFilename: '[name]',
+    publicPath: "/"
   },
   mode: "development",
   // 开发工具
@@ -161,11 +160,13 @@ const webpackDevConf = {
     // 友好的终端错误显示方式
     new FriendlyErrorsPlugin({
       // 编译成功提示
-      // compilationSuccessInfo: {
-      //   messages: [
-      //     chalk.cyan(`App running at: http://${ip}:${config.port}`),
-      //   ],
-      // },
+      compilationSuccessInfo: {
+        messages: [
+          "  App running at:",
+          `  - Local:   ${chalk.cyan(`http://127.0.0.1:${config.port}/`)}`,
+          `  - Network: ${chalk.cyan(`http://${ip}:${config.port}/`)}`
+        ],
+      },
       // 编译错误提示
       onErrors: function (severity, errors) {
         // 可以收听插件转换和优先级的错误
@@ -189,8 +190,8 @@ const webpackDevConf = {
   devServer: {
     port: config.port,
     host: "0.0.0.0",
-    contentBase: config.distPath,
-    publicPath: '/',
+    contentBase: path.resolve(config.rootPath, "index.html"),
+    // publicPath: '/',
     historyApiFallback: true,
     overlay: true,
     hot: true,
@@ -221,13 +222,3 @@ const webpackDevConf = {
     }
   },
 };
-
-module.exports = webpackAutoFindPort({
-  config: webpackDevConf,
-  logger: port => {
-    console.log("  App running at:");
-    console.log(`  - Local:   ${chalk.cyan(`http://127.0.0.1:${port}/`)}`);
-    console.log(`  - Network: ${chalk.cyan(`http://${ip}:${port}/`)}`);
-    console.log(chalk.cyan());
-  }
-});

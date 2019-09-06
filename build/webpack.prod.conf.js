@@ -18,8 +18,8 @@ module.exports = {
   entry: webpackBaseConf.entries(),
   output: {
     path: config.distPath,
-    filename: 'js/[name].[chunkhash].js',
-    chunkFilename: 'js/[name].[chunkhash].js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js',
     publicPath: "/"
   },
   mode: "production",
