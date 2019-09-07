@@ -30,7 +30,8 @@ const publicPath = path.resolve(__dirname, `${pathPrefix}public`);
 const port = 8000;
 // dev时是否需要自动打开浏览器
 const needOpenApp = false;
-
+// 需要 Analyzer
+const needAnalyzer = false;
 // 代理配置
 const proxy = {
   // '/api': {
@@ -53,6 +54,7 @@ module.exports = {
   publicPath,
   port,
   needOpenApp,
+  needAnalyzer,
   proxy,
   pagesConfig: require("../pages-config").pagesConfig,
 };

@@ -8,7 +8,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // 压缩 css
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require("./config");
 const webpackBaseConf = require("./webpack.base.conf");
 const postcss = require('../postcss.config');
@@ -17,8 +16,8 @@ module.exports = {
   entry: webpackBaseConf.entries(),
   output: {
     path: config.distPath,
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js',
+    filename: '[name].[chunkhash].bundle.js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
     publicPath: "/"
   },
   mode: "production",
@@ -111,34 +110,15 @@ module.exports = {
   optimization: {
     namedChunks: true,
     moduleIds: 'hashed',
-    splitChunks: {
-      maxInitialRequests: 6,
-      cacheGroups: {
-        dll: {
-          chunks: 'all',
-          test: /[\\/]node_modules[\\/](jquery|core-js|vue|vue-router)[\\/]/,
-          name: 'dll',
-          priority: 2,
-          enforce: true,
-          reuseExistingChunk: true
-        },
-        superSlide: {
-          chunks: 'all',
-          test: /[\\/]src[\\/]assets[\\/]js[\\/]/,
-          name: 'superSlide',
-          priority: 1,
-          enforce: true,
-          reuseExistingChunk: true
-        },
-        commons: {
-          name: 'commons',
-          // Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
-          minChunks: 2,
-          chunks: 'all',
-          reuseExistingChunk: true
-        }
-      }
-    },
+    /**
+     * manifest js have already inline to every html file, please run build and see it in html.
+     * Maybe we don't need manifest file, because we are a multi-page application. each html page's js maybe not complex.
+     * So it depending on how you understand your js file complex or simple.
+     * --------------------------------------------------------------------------------------------------------------------------- 译文
+     * 清单js已经内联到每个html文件，请运行构建并查看它的html。
+     * 也许我们不需要清单文件，因为我们是一个多页面的应用程序。每个html页面的js可能并不复杂。
+     * 所以这取决于你如何理解你的js文件复杂或简单。
+     */
     runtimeChunk: {
       name: 'manifest'
     },
@@ -154,7 +134,46 @@ module.exports = {
       }),
       // 压缩 css
       new OptimizeCSSAssetsPlugin({})
-    ]
+    ],
+    splitChunks: {
+      // maxInitialRequests: 6,
+      cacheGroups: {
+        // 提取 node_modules 中代码
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          priority: 10,
+        },
+        // 复用的文件，单独抽离 后续再优化此配置
+        commons: {
+          name: 'commons',
+          chunks: 'all',
+          // 表示被引用次数，默认为1。Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
+          minChunks: 2,
+          // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
+          minSize: 30000,
+          // 来设置优先级
+          priority: 0,
+        },
+        // dll: {
+        //   chunks: 'all',
+        //   test: /[\\/]node_modules[\\/](jquery|core-js|vue|vue-router)[\\/]/,
+        //   name: 'dll',
+        //   priority: 2,
+        //   enforce: true,
+        //   reuseExistingChunk: true
+        // },
+        // superSlide: {
+        //   chunks: 'all',
+        //   test: /[\\/]src[\\/]assets[\\/]js[\\/]/,
+        //   name: 'superSlide',
+        //   priority: 1,
+        //   enforce: true,
+        //   reuseExistingChunk: true
+        // },
+      }
+    },
   },
   // 插件配置项
   plugins: [
@@ -165,19 +184,7 @@ module.exports = {
       chunkFilename: '[name].[hash].css'
     }),
     // 删除 dist 文件夹
-    new CleanWebpackPlugin({
-      root: config.rootPath,
-      dry: true,
-      verbose: true,
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      //  是否在默认浏览器中自动打开报告
-      openAnalyzer: true,
-      //  将在"服务器"模式下使用的端口启动HTTP服务器。
-      analyzerPort: 9528,
-      reportFilename: path.resolve(config.rootPath, "report.html")
-    })
+    new CleanWebpackPlugin(),
   ],
   resolve: {
     // 设置可省略文件后缀名

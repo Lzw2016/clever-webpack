@@ -2,7 +2,10 @@ const path = require("path");
 const webpackMerge = require("webpack-merge");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const config = require("./config");
+
+// TODO entry - jsPath 名称处理去掉.js 后缀
 
 // 多入口配置 (JS文件)
 const entries = () => {
@@ -71,7 +74,8 @@ const getHtmlPlugin = () => {
       filename: itemConfig.htmlPath,
       // 模板文件的路径
       template: path.resolve(config.srcPath, itemConfig.htmlPath),
-      chunks: [...itemConfig.jsPathArray]
+      // 此处chunks名字与webpack.prod.config.js配置一致
+      chunks: ['manifest', 'vendor', 'commons', ...itemConfig.jsPathArray]
     });
     // console.log("template", htmlWebpackConfig.template);
     htmlPluginArray.push(new HtmlWebpackPlugin(htmlWebpackConfig));
@@ -178,6 +182,19 @@ const basePlugins = [
     },
   ]),
 ];
+
+if (config.needAnalyzer && config.runMode !== config.runModeEnum.dev) {
+  basePlugins.push(
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      //  是否在默认浏览器中自动打开报告
+      openAnalyzer: true,
+      //  将在"服务器"模式下使用的端口启动HTTP服务器。
+      analyzerPort: 9528,
+      reportFilename: path.resolve(config.rootPath, "report.html")
+    })
+  );
+}
 
 // resolve.extensions
 const baseResolveExtensions = [' ', '.js', '.json', '.jsx'];

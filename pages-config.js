@@ -2,9 +2,8 @@
 const pagesConfig = [
   {
     htmlPath: "index.html",
-    jsPathArray: [
-      'index.js',
-    ],
+    // htmlOutPath: "",
+    jsPathArray: ['index.js'],
   },
   {
     htmlPath: "pages/demo/test.html",
