@@ -120,7 +120,7 @@ module.exports = {
      * 所以这取决于你如何理解你的js文件复杂或简单。
      */
     runtimeChunk: {
-      name: 'manifest'
+      name: 'manifest',
     },
     // 用于配置 minimizers 和选项
     minimizer: [
@@ -138,6 +138,7 @@ module.exports = {
     splitChunks: {
       // maxInitialRequests: 6,
       cacheGroups: {
+        ...config.extCacheGroups,
         // 提取 node_modules 中代码
         vendor: {
           name: 'vendor',
@@ -150,7 +151,7 @@ module.exports = {
           name: 'commons',
           chunks: 'all',
           // 表示被引用次数，默认为1。Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
-          minChunks: 2,
+          minChunks: Math.ceil(config.pagesConfig.length / 3),
           // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
           minSize: 30000,
           // 来设置优先级

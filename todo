@@ -1,0 +1,34 @@
+public
+    images
+    medias
+    js
+src
+    assets
+        css
+        fonts
+        images
+        medias
+        js
+    api
+    utils
+    pages
+
+
+
+
+
+—————— pages-config
+htmlPath - HTML模板文件路径
+htmlOutPath - HTML打包处理之后的输出路径 --- ?
+jsPathArray - 当前页面依赖的js文件数组
+
+
+——————问题跟踪
+css文件处理
+    处理是否生效
+    路径是否正确
+Html ejs模板使用
+正确引入jquery及其插件，能正常使用
+打包js，css体积优化｜js文件分片? ---- OK
+commons.minChunks 根据html文件数量计算 ---- OK
+art-template-loader 使用，处理图片资源文件

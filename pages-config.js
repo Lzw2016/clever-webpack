@@ -6,10 +6,18 @@ const pagesConfig = [
     jsPathArray: ['index.js'],
   },
   {
-    htmlPath: "pages/demo/test.html",
+    htmlPath: "demo/test.html",
     jsPathArray: [
-      'pages/demo/index1.js',
-      'pages/demo/index2.js',
+      'demo/index1.js',
+      'demo/index2.js',
+      'demo/index3.js',
+    ],
+  },
+  {
+    htmlPath: "demo2/test.html",
+    jsPathArray: [
+      'demo2/index2.js',
+      'demo2/index3.js',
     ],
   },
 ];

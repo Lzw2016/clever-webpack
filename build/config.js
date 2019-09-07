@@ -15,23 +15,26 @@ const pathPrefix = '../';
 // 打包版本号
 const appVersion = new Date().getTime();
 // 网站图标绝对路径
-const favicon = path.resolve(__dirname, `${pathPrefix}src/favicon.ico`);
+const favicon = path.resolve(__dirname, `${pathPrefix}public/images/favicon.png`);
 // 项目根目录绝对路径
 const rootPath = path.resolve(__dirname, `${pathPrefix}`);
 // 打包输出目录绝对路径
 const distPath = path.resolve(__dirname, `${pathPrefix}dist`);
 // node_modules文件夹绝对路径
 const nodeModulesPath = path.resolve(__dirname, `${pathPrefix}node_modules`);
-// src文件夹绝对路径
-const srcPath = path.resolve(__dirname, `${pathPrefix}src`);
 // public文件夹绝对路径
 const publicPath = path.resolve(__dirname, `${pathPrefix}public`);
+// src文件夹绝对路径
+const srcPath = path.resolve(__dirname, `${pathPrefix}src`);
+// src文件夹绝对路径
+const pagesPath = path.resolve(__dirname, `${pathPrefix}src/pages`);
 // devserver 端口
 const port = 8000;
 // dev时是否需要自动打开浏览器
 const needOpenApp = false;
 // 需要 Analyzer
-const needAnalyzer = false;
+const needAnalyzer = true;
+
 // 代理配置
 const proxy = {
   // '/api': {
@@ -42,7 +45,13 @@ const proxy = {
   // }
 };
 
+// webpack.prod.conf 中的 splitChunks.cacheGroups 扩展
+const extCacheGroups = {
+
+};
+
 module.exports = {
+  pagesConfig: require("../pages-config").pagesConfig,
   runMode,
   runModeEnum,
   appVersion,
@@ -50,11 +59,12 @@ module.exports = {
   rootPath,
   distPath,
   nodeModulesPath,
-  srcPath,
   publicPath,
+  srcPath,
+  pagesPath,
   port,
   needOpenApp,
   needAnalyzer,
   proxy,
-  pagesConfig: require("../pages-config").pagesConfig,
+  extCacheGroups,
 };

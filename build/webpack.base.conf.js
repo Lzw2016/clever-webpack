@@ -5,7 +5,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const config = require("./config");
 
-// TODO entry - jsPath 名称处理去掉.js 后缀
+// entry - jsPath 名称处理去掉.js 后缀
+const entryKeyHandle = (jsPath) => {
+  if (!jsPath) {
+    return jsPath;
+  }
+  if (jsPath.endsWith(".js")) {
+    return jsPath.substring(0, jsPath.length - 3);
+  }
+  return jsPath;
+};
 
 // 多入口配置 (JS文件)
 const entries = () => {
@@ -21,8 +30,8 @@ const entries = () => {
       return;
     }
     itemConfig.jsPathArray.forEach(jsPath => {
-      const absolutePath = path.resolve(config.srcPath, jsPath);
-      entry[jsPath] = absolutePath;
+      const absolutePath = path.resolve(config.pagesPath, jsPath);
+      entry[entryKeyHandle(jsPath)] = absolutePath;
       count++;
     });
   });
@@ -69,13 +78,17 @@ const getHtmlPlugin = () => {
     if (!itemConfig.htmlPath) {
       return;
     }
+    const jsPathArray = [];
+    if (itemConfig.jsPathArray && itemConfig.jsPathArray.length > 0) {
+      itemConfig.jsPathArray.forEach(jsPath => jsPathArray.push(entryKeyHandle(jsPath)));
+    }
     const htmlWebpackConfig = webpackMerge(baseConfig, {
       // 输出文件的名称
       filename: itemConfig.htmlPath,
       // 模板文件的路径
-      template: path.resolve(config.srcPath, itemConfig.htmlPath),
+      template: path.resolve(config.pagesPath, itemConfig.htmlPath),
       // 此处chunks名字与webpack.prod.config.js配置一致
-      chunks: ['manifest', 'vendor', 'commons', ...itemConfig.jsPathArray]
+      chunks: [...Object.keys(config.extCacheGroups), 'manifest', 'vendor', 'commons', ...jsPathArray]
     });
     // console.log("template", htmlWebpackConfig.template);
     htmlPluginArray.push(new HtmlWebpackPlugin(htmlWebpackConfig));
