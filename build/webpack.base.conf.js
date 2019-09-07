@@ -1,6 +1,7 @@
 const path = require("path");
 const webpackMerge = require("webpack-merge");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require("./config");
 
 // 多入口配置 (JS文件)
@@ -167,7 +168,15 @@ const basePlugins = [
   //   favicon: config.favicon,
   //   appVersion: config.appVersion
   // }),
-  ...getHtmlPlugin()
+  ...getHtmlPlugin(),
+  new CopyWebpackPlugin([
+    {
+      // 打包的静态资源目录地址
+      from: config.publicPath,
+      // 打包到dist下面的public
+      to: './public'
+    },
+  ]),
 ];
 
 // resolve.extensions

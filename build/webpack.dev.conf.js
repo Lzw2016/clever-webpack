@@ -102,8 +102,8 @@ module.exports = {
             options: {
               sourceMap: true,
               resources: [
-                path.resolve(config.publicPath, 'assets/styles/core/_settings.scss'),
-                path.resolve(config.publicPath, 'assets/styles/core/_mixin.scss'),
+                path.resolve(config.srcPath, 'assets/styles/core/_settings.scss'),
+                path.resolve(config.srcPath, 'assets/styles/core/_mixin.scss'),
               ]
             }
           }

@@ -8,7 +8,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 // 压缩 css
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require("./config");
 const webpackBaseConf = require("./webpack.base.conf");
@@ -73,8 +72,8 @@ module.exports = {
             options: {
               sourceMap: true,
               resources: [
-                path.resolve(config.publicPath, 'assets/styles/core/_settings.scss'),
-                path.resolve(config.publicPath, 'assets/styles/core/_mixin.scss')
+                path.resolve(config.srcPath, 'assets/styles/core/_settings.scss'),
+                path.resolve(config.srcPath, 'assets/styles/core/_mixin.scss')
               ]
             }
           }
@@ -162,24 +161,20 @@ module.exports = {
     ...webpackBaseConf.basePlugins,
     new webpack.HashedModuleIdsPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[name].[hash].css'
+      filename: '[name].[hash].css',
+      chunkFilename: '[name].[hash].css'
     }),
     // 删除 dist 文件夹
-    new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      {
-        // 打包的静态资源目录地址
-        from: config.staticPath,
-        // 打包到dist下面的static
-        to: './static'
-      },
-    ]),
+    new CleanWebpackPlugin({
+      root: config.rootPath,
+      dry: true,
+      verbose: true,
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       //  是否在默认浏览器中自动打开报告
       openAnalyzer: true,
-      //  将在“服务器”模式下使用的端口启动HTTP服务器。
+      //  将在"服务器"模式下使用的端口启动HTTP服务器。
       analyzerPort: 9528,
       reportFilename: path.resolve(config.rootPath, "report.html")
     })

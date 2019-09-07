@@ -26,8 +26,6 @@ const nodeModulesPath = path.resolve(__dirname, `${pathPrefix}node_modules`);
 const srcPath = path.resolve(__dirname, `${pathPrefix}src`);
 // public文件夹绝对路径
 const publicPath = path.resolve(__dirname, `${pathPrefix}public`);
-// static文件夹绝对路径
-const staticPath = path.resolve(__dirname, `${pathPrefix}static`);
 // devserver 端口
 const port = 8000;
 // dev时是否需要自动打开浏览器
@@ -53,7 +51,6 @@ module.exports = {
   nodeModulesPath,
   srcPath,
   publicPath,
-  staticPath,
   port,
   needOpenApp,
   proxy,
