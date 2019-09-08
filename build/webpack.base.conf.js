@@ -89,7 +89,9 @@ const getHtmlPlugin = () => {
       // 模板文件的路径
       template: path.resolve(config.pagesPath, itemConfig.htmlPath),
       // 此处chunks名字与webpack.prod.config.js配置一致
-      chunks: [...Object.keys(config.extCacheGroups), 'manifest', 'vendor', 'commons', ...jsPathArray]
+      chunks: [...Object.keys(config.extCacheGroups), 'manifest', 'vendor', 'commons', ...jsPathArray],
+      // HTML页面标题
+      title: itemConfig.title,
     });
     // console.log("template", htmlWebpackConfig.template);
     htmlPluginArray.push(new HtmlWebpackPlugin(htmlWebpackConfig));
