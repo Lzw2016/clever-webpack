@@ -3,7 +3,7 @@ css文件处理   -- OK
     处理是否生效 -- OK
     路径是否正确 -- OK
 Html ejs模板使用
-正确引入jquery及其插件，能正常使用
+正确引入jquery及其插件，能正常使用 --- OK
 打包js，css体积优化｜js文件分片? ---- OK
 commons.minChunks 根据html文件数量计算 ---- OK
-art-template-loader 使用，处理图片资源文件
+art-template-loader 使用，处理图片资源文件 ---- OK

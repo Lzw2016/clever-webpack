@@ -26,6 +26,10 @@ const pagesConfig = [
       'demo2/index3.js',
     ],
   },
+  {
+    htmlPath: "demo3/test.html",
+    jsPathArray: ['demo3/index.js'],
+  },
 ];
 
 module.exports.pagesConfig = pagesConfig;

@@ -99,17 +99,15 @@ const getHtmlPlugin = () => {
 
 // 公用的rules
 const baseModuleRules = [
-  // {
-  //     test: require.resolve('jquery'),
-  //     use: [
-  //         { loader: 'expose-loader', options: 'jQuery' },
-  //         { loader: 'expose-loader', options: '$' }
-  //     ]
-  // },
   {
-    // 用于匹配loaders所处理文件拓展名的正则表达式
+    test: require.resolve('jquery'),
+    use: [
+      { loader: 'expose-loader', options: 'jQuery' },
+      { loader: 'expose-loader', options: '$' }
+    ]
+  },
+  {
     test: /\.json$/,
-    // 具体loader的名称
     use: 'json-loader',
     type: 'javascript/auto',
     exclude: /node_modules/

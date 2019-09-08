@@ -62,9 +62,6 @@ module.exports = {
           },
           {
             loader: 'sass-loader',
-            options: {
-              publicPath: ""
-            }
           },
           {
             loader: 'sass-resources-loader',
@@ -98,11 +95,27 @@ module.exports = {
           },
           {
             loader: 'less-loader',
-            options: {
-              publicPath: ""
-            }
           }
         ]
+      },
+      // art-template 模版配置 https://aui.github.io/art-template/zh-cn/docs/options.html
+      {
+        test: /\.art$/,
+        loader: "art-template-loader",
+        options: {
+          // 是否开启对模板输出语句自动编码功能。为 false 则关闭编码输出功能。escape 可以防范 XSS 攻击
+          escape: true,
+          // 默认后缀名。如果没有后缀名，则会自动添加 extname
+          extname: '.art',
+          // bail 如果为 true，编译错误与运行时错误都会抛出异常
+          bail: true,
+          // 是否开启缓存
+          cache: true,
+          // 启动模板引擎调试模式。如果为 true: {cache:false, minimize:false, compileDebug:true}
+          debug: false,
+          // 是否编译调试版
+          compileDebug: false,
+        }
       }
     ]
   },

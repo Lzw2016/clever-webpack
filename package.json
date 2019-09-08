@@ -18,7 +18,9 @@
     "qs": "^6.8.0",
     "axios": "^0.19.0",
     "crypto-js": "^3.1.9-1",
-    "jsonpath": "^1.0.2"
+    "jsonpath": "^1.0.2",
+    "jquery": "^3.4.1",
+    "art-template": "^4.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -78,7 +80,15 @@
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "stylelint": "^10.1.0",
+    "stylelint-config-css-modules": "^1.4.0",
+    "stylelint-config-prettier": "^5.2.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.1.0",
+    "stylelint-order": "^3.1.0",
+    "art-template-loader": "^1.4.3"
   },
   "browserslist": [
     "defaults",
