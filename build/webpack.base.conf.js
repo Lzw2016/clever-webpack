@@ -82,9 +82,10 @@ const getHtmlPlugin = () => {
     if (itemConfig.jsPathArray && itemConfig.jsPathArray.length > 0) {
       itemConfig.jsPathArray.forEach(jsPath => jsPathArray.push(entryKeyHandle(jsPath)));
     }
+    // console.log("jsPathArray", jsPathArray);
     const htmlWebpackConfig = webpackMerge(baseConfig, {
       // 输出文件的名称
-      filename: itemConfig.htmlPath,
+      filename: itemConfig.htmlOutPath || itemConfig.htmlPath,
       // 模板文件的路径
       template: path.resolve(config.pagesPath, itemConfig.htmlPath),
       // 此处chunks名字与webpack.prod.config.js配置一致

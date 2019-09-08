@@ -1,6 +1,7 @@
 **/node_modules
 /dist
 /test
+/test.js
 
 .DS_Store
 npm-debug.log*

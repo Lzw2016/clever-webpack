@@ -1,4 +1,5 @@
 const path = require("path");
+const { pagesConfig } = require("../src/pages-config");
 // 打包模式 production development 默认 production
 let runMode = process.env.NODE_ENV || 'production';
 if (runMode !== 'production' && runMode !== 'development') {
@@ -33,7 +34,7 @@ const port = 8000;
 // dev时是否需要自动打开浏览器
 const needOpenApp = false;
 // 需要 Analyzer
-const needAnalyzer = true;
+const needAnalyzer = false;
 
 // 代理配置
 const proxy = {
@@ -47,11 +48,20 @@ const proxy = {
 
 // webpack.prod.conf 中的 splitChunks.cacheGroups 扩展
 const extCacheGroups = {
-
+  // commons: {
+  //   name: 'commons',
+  //   chunks: 'all',
+  //   // 表示被引用次数，默认为1
+  //   minChunks: 2,
+  //   // 表示抽取出来的文件在压缩前的最小大小，默认为 30000
+  //   minSize: 30000,
+  //   // 来设置优先级
+  //   priority: 0,
+  // },
 };
 
 module.exports = {
-  pagesConfig: require("../pages-config").pagesConfig,
+  pagesConfig,
   runMode,
   runModeEnum,
   appVersion,

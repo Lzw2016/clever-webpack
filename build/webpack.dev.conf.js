@@ -15,8 +15,8 @@ module.exports = {
   entry: webpackBaseConf.entries(),
   output: {
     path: config.distPath,
-    filename: '[name]',
-    chunkFilename: '[name]',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].chunk.js',
     publicPath: "/"
   },
   mode: "development",
@@ -41,7 +41,8 @@ module.exports = {
         // 不检测的文件
         exclude: [
           /node_modules/,
-          path.resolve(config.srcPath, 'assets/js/jquery.SuperSlide.2.1.1.js')
+          /public\/js\//,
+          // path.resolve(config.publicPath, 'js/'),
         ],
         // 指定检查的目录
         include: [
@@ -102,8 +103,7 @@ module.exports = {
             options: {
               sourceMap: true,
               resources: [
-                path.resolve(config.srcPath, 'assets/styles/core/_settings.scss'),
-                path.resolve(config.srcPath, 'assets/styles/core/_mixin.scss'),
+                path.resolve(config.srcPath, 'assets/scss/**/*.scss'),
               ]
             }
           }
